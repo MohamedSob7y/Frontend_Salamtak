@@ -1,1 +1,189 @@
-<p>book-appointment works!</p>
+<!-- <div class="book-page">
+
+ 
+  <div class="ai-helper">
+    <div>
+      <h3>Not sure which doctor you need?</h3>
+      <p>Use our AI assistant to guide you 🔍</p>
+    </div>
+
+   <button routerLink="/chatbot">
+  Ask AI 🤖
+</button>
+  </div>
+
+  
+  <div class="filters">
+
+    <div class="search-box">
+      <input type="text" placeholder="Search doctor..."
+             [(ngModel)]="searchText">
+      <span>🔍</span>
+    </div>
+
+    <select [(ngModel)]="selectedSpecialty">
+      <option value="">All Specialties</option>
+      <option *ngFor="let s of specialties">{{ s }}</option>
+    </select>
+
+    <select [(ngModel)]="selectedLocation">
+      <option value="">All Locations</option>
+      <option *ngFor="let l of locations">{{ l }}</option>
+    </select>
+
+    <button class="clear" (click)="clearFilters()">Clear</button>
+
+  </div>
+
+ 
+  <div class="results-header">
+    <h2>{{ filteredDoctors.length }} Doctors Found</h2>
+
+    <select>
+      <option>Sort by Rating</option>
+      <option>Experience</option>
+    </select>
+  </div>
+
+  <div class="doctor-grid">
+
+    <div class="doctor-card" *ngFor="let doctor of filteredDoctors">
+
+      <div class="top">
+        <img [src]="doctor.image">
+
+        <div>
+          <h3>{{ doctor.name }}</h3>
+          <p>{{ doctor.specialty }}</p>
+          <span class="location">📍 {{ doctor.location }}</span>
+        </div>
+
+        <span *ngIf="doctor.online" class="online-dot"></span>
+      </div>
+
+      <div class="rating">
+        ⭐ {{ doctor.rating }} • {{ doctor.experience }} yrs exp
+      </div>
+
+       <div class="actions">
+        <button class="view"
+                [routerLink]="['/patient/doctor', doctor.id]">
+          View Profile
+        </button>
+
+        <button class="book"
+                [routerLink]="['/patient/doctor', doctor.id]">
+          Book Now
+        </button>
+      </div> 
+<div class="actions">
+  <button
+    class="book"
+    [routerLink]="['/patient/doctor', doctor.id]">
+    Book Appointment
+  </button>
+</div>
+    </div>
+
+  </div>
+
+  
+  <div *ngIf="filteredDoctors.length === 0" class="empty">
+    <h3>No doctors found 😢</h3>
+    <p>Try different filters or use AI assistant</p>
+  </div>
+
+</div> -->
+
+
+
+
+<div class="book-page">
+
+  <!-- AI -->
+  <div class="ai-helper">
+    <div>
+      <h3>Not sure which doctor you need?</h3>
+      <p>Use our AI assistant to guide you 🔍</p>
+    </div>
+
+    <button routerLink="/chatbot">
+      Ask AI 🤖
+    </button>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+
+    <div class="search-box">
+      <input
+        type="text"
+        placeholder="Search doctor..."
+        [(ngModel)]="searchText">
+      <span>🔍</span>
+    </div>
+
+    <select [(ngModel)]="selectedSpecialty">
+      <option value="">All Specialties</option>
+      <option *ngFor="let s of specialties">{{ s }}</option>
+    </select>
+
+    <select [(ngModel)]="selectedLocation">
+      <option value="">All Locations</option>
+      <option *ngFor="let l of locations">{{ l }}</option>
+    </select>
+
+    <button class="clear" (click)="clearFilters()">Clear</button>
+  </div>
+
+  <!-- Results -->
+  <div class="results-header">
+    <h2>{{ filteredDoctors.length }} Doctors Found</h2>
+
+    <select>
+      <option>Sort by Rating</option>
+      <option>Experience</option>
+    </select>
+  </div>
+
+  <!-- Doctors -->
+  <div class="doctor-grid">
+
+    <div class="doctor-card" *ngFor="let doctor of filteredDoctors">
+
+      <div class="top">
+        <img [src]="doctor.image">
+
+        <div>
+          <h3>{{ doctor.name }}</h3>
+          <p>{{ doctor.specialty }}</p>
+          <span class="location">📍 {{ doctor.location }}</span>
+        </div>
+
+        <span *ngIf="doctor.online" class="online-dot"></span>
+      </div>
+
+      <div class="rating">
+        ⭐ {{ doctor.rating }} • {{ doctor.experience }} yrs exp
+      </div>
+
+      <!-- زرار واحد فقط -->
+      <div class="actions">
+        <button
+          class="book"
+          [routerLink]="['/patient/doctor', doctor.id]">
+          Book Appointment
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Empty -->
+  <div *ngIf="filteredDoctors.length === 0" class="empty">
+    <h3>No doctors found 😢</h3>
+    <p>Try different filters or use AI assistant</p>
+  </div>
+
+</div>

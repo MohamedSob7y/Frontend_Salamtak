@@ -6,4 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './chatbot.html',
   styleUrl: './chatbot.css',
 })
-export class Chatbot {}
+export class ChatbotComponent {}
