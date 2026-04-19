@@ -1,1 +1,53 @@
-<p>chatbot works!</p>
+<div class="chat-page">
+
+  <!-- HEADER -->
+  <div class="chat-header">
+    <h2>AI Health Assistant 🤖</h2>
+    <p>Describe your symptoms to find the right doctor</p>
+  </div>
+
+  <!-- MESSAGES -->
+  <div class="chat-box">
+
+    <div *ngFor="let msg of messages"
+         [ngClass]="msg.sender === 'user' ? 'user-msg' : 'bot-msg'">
+
+      {{ msg.text }}
+<div *ngIf="isThinking" class="thinking">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+      <!-- زرار الفلترة -->
+      <button *ngIf="msg.specialty"
+              class="suggest-btn"
+              (click)="goToDoctors(msg.specialty)">
+        Find {{ msg.specialty }} Doctors →
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- QUICK SYMPTOMS -->
+  <div class="quick-actions">
+    <button (click)="userInput='Headache'; sendMessage()">Headache</button>
+    <button (click)="userInput='Chest pain'; sendMessage()">Chest pain</button>
+    <button (click)="userInput='Skin rash'; sendMessage()">Skin rash</button>
+    <button (click)="userInput='Fever'; sendMessage()">Fever</button>
+  </div>
+
+  <!-- INPUT -->
+  <div class="input-area">
+
+    <input
+      [(ngModel)]="userInput"
+      placeholder="Type your symptoms..."
+      (keyup.enter)="sendMessage()"
+    />
+
+    <button (click)="sendMessage()">Send</button>
+
+  </div>
+
+</div>
