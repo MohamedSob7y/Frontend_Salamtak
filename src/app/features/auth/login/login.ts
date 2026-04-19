@@ -41,6 +41,13 @@ export class LoginComponent {
       this.router.navigate(['/patient/dashboard']);
     }
   }
+  signIn() {
+  if (this.role === 'doctor') {
+    this.router.navigate(['/doctor/dashboard']);
+  } else {
+    this.router.navigate(['/patient/dashboard']);
+  }
+}
 }
 
 

@@ -201,3 +201,39 @@
     border-radius: 8px;
   }
 }
+
+
+
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.view-all-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1fa463;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.view-all-link:hover {
+  text-decoration: underline;
+}
+
+.reports-card .report {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.reports-card .report:hover {
+  background: #f9fafb;
+}

@@ -1,1 +1,268 @@
-<p>medical-records works!</p>
+<div class="records-page">
+
+  
+  <div class="records-hero">
+    <div class="hero-left">
+      <span class="badge">Medical Record</span>
+      <h1>{{ patient.name }}</h1>
+      <p>
+        Patient ID: {{ patient.patientId }} • {{ patient.gender }} • {{ patient.age }} years
+      </p>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-stat">
+        <span>Blood Group</span>
+        <strong>{{ patient.bloodGroup }}</strong>
+      </div>
+
+      <div class="hero-stat">
+        <span>Last Visit</span>
+        <strong>{{ patient.lastVisit }}</strong>
+      </div>
+
+      <div class="hero-stat">
+        <span>Status</span>
+        <strong class="status-active">{{ patient.currentStatus }}</strong>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="summary-grid">
+    <div class="summary-card">
+      <span>Total Visits</span>
+      <h3>{{ summary.visits }}</h3>
+    </div>
+
+    <div class="summary-card">
+      <span>Doctors Seen</span>
+      <h3>{{ summary.doctors }}</h3>
+    </div>
+
+    <div class="summary-card">
+      <span>Prescriptions</span>
+      <h3>{{ summary.prescriptions }}</h3>
+    </div>
+
+    <div class="summary-card">
+      <span>Investigations</span>
+      <h3>{{ summary.investigations }}</h3>
+    </div>
+  </div>
+
+ 
+  <div class="records-grid">
+
+   
+    <div class="left-column">
+
+   
+      <div class="card">
+        <div class="card-header">
+          <h2>Current Care Plan</h2>
+        </div>
+
+        <div class="care-grid">
+          <div class="care-item">
+            <label>Current Doctor</label>
+            <p>{{ currentCare.doctor }}</p>
+            <small>{{ currentCare.specialty }}</small>
+          </div>
+
+          <div class="care-item">
+            <label>Current Diagnosis</label>
+            <p>{{ currentCare.diagnosis }}</p>
+          </div>
+
+          <div class="care-item">
+            <label>Treatment Duration</label>
+            <p>{{ currentCare.treatmentDuration }}</p>
+          </div>
+
+          <div class="care-item">
+            <label>Next Appointment</label>
+            <p>{{ currentCare.nextAppointment }}</p>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="card">
+        <div class="card-header">
+          <h2>Visit Timeline</h2>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item" *ngFor="let visit of visits">
+            <div class="timeline-dot"></div>
+
+            <div class="timeline-content">
+              <div class="timeline-top">
+                <div>
+                  <h3>{{ visit.doctor }}</h3>
+                  <span>{{ visit.specialty }}</span>
+                </div>
+
+                <div class="timeline-meta">
+                  <strong>{{ visit.date }}</strong>
+                  <small>{{ visit.duration }}</small>
+                </div>
+              </div>
+
+              <div class="timeline-body">
+                <p><strong>Chief Complaint:</strong> {{ visit.complaint }}</p>
+                <p><strong>Diagnosis:</strong> {{ visit.diagnosis }}</p>
+                <p><strong>Doctor Notes:</strong> {{ visit.notes }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+     
+      <div class="card">
+        <div class="card-header">
+          <h2>Prescriptions</h2>
+        </div>
+
+        <div class="prescription-card" *ngFor="let prescription of prescriptions">
+          <div class="prescription-top">
+            <div>
+              <h3>{{ prescription.doctor }}</h3>
+              <span>{{ prescription.date }}</span>
+            </div>
+          </div>
+
+          <ul>
+            <li *ngFor="let item of prescription.items">{{ item }}</li>
+          </ul>
+
+          <p class="advice">
+            <strong>Advice:</strong> {{ prescription.advice }}
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    
+    <div class="right-column">
+
+     
+      <div class="card">
+        <div class="card-header">
+          <h2>Patient Information</h2>
+        </div>
+
+        <div class="info-list">
+          <div class="info-row">
+            <span>Allergies</span>
+            <strong>{{ patient.allergies }}</strong>
+          </div>
+
+          <div class="info-row">
+            <span>Chronic Diseases</span>
+            <strong>{{ patient.chronicDiseases }}</strong>
+          </div>
+
+          <div class="info-row">
+            <span>Current Follow-up</span>
+            <strong>{{ currentCare.doctor }}</strong>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="card">
+        <div class="card-header">
+          <h2>Investigations</h2>
+        </div>
+
+        <div class="investigation-item" *ngFor="let item of investigations">
+          <div>
+            <h4>{{ item.title }}</h4>
+            <p>{{ item.type }} • {{ item.requestedBy }}</p>
+            <small>{{ item.date }}</small>
+          </div>
+
+          <span
+            class="status-badge"
+            [class.completed]="item.status === 'Completed'"
+            [class.pending]="item.status === 'Pending'"
+          >
+            {{ item.status }}
+          </span>
+        </div>
+      </div>
+
+     
+      <!-- <div class="card">
+        <div class="card-header">
+          <h2>Documents</h2>
+        </div>
+
+        <div class="doc-item" *ngFor="let file of attachments">
+          <div>
+            <h4>{{ file.name }}</h4>
+            <small>Uploaded: {{ file.uploadedAt }}</small>
+          </div>
+
+         
+<div class="doc-item" *ngFor="let file of attachments">
+  <div>
+    <h4>{{ file.name }}</h4>
+    <small>Uploaded: {{ file.uploadedAt }}</small>
+  </div>
+
+  <a 
+    class="doc-btn"
+    [href]="file.url"
+    target="_blank"
+  >
+    View
+  </a>
+</div>
+
+
+
+
+        </div>
+      </div> -->
+
+<div class="card">
+  <div class="card-header">
+    <h2>Documents</h2>
+  </div>
+
+  <div class="docs-grid">
+
+    <div class="doc-card" *ngFor="let file of attachments">
+
+      <div class="doc-icon">📄</div>
+
+      <div class="doc-info">
+        <h4>{{ file.name }}</h4>
+        <p>Uploaded: {{ file.uploadedAt }}</p>
+      </div>
+
+      <a 
+        class="doc-btn"
+        [href]="file.url"
+        target="_blank"
+      >
+        View
+      </a>
+
+    </div>
+
+  </div>
+</div>
+
+
+
+    </div>
+
+  </div>
+
+</div>
