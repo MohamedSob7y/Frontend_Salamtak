@@ -1,0 +1,200 @@
+ <div class="dashboard">
+
+
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Your health is our priority</h1>
+      <p>Book appointments with top doctors instantly</p>
+
+      <div class="hero-actions">
+<div class="hero-actions">
+
+  <button class="primary" routerLink="/patient/book-appointment">
+    Find Doctor
+  </button>
+
+  <button class="outline" routerLink="/patient/appointments">
+    My Appointments
+  </button>
+
+</div>
+
+      </div>
+    </div>
+
+    <img src="assets/images/doctor.png">
+  </div>
+
+
+
+  <div class="stats">
+    <div class="stat-card">
+      <span>Appointments</span>
+      <h3>5</h3>
+      <small class="up">+12%</small>
+    </div>
+
+    <div class="stat-card">
+      <span>Doctors</span>
+      <h3>3</h3>
+    </div>
+
+    <div class="stat-card">
+      <span>Reports</span>
+      <h3>8</h3>
+    </div>
+
+    <div class="stat-card">
+      <span>Notifications</span>
+      <h3>2</h3>
+    </div>
+  </div>
+
+
+ 
+  <div class="grid">
+
+
+    <div class="section doctors">
+      <div class="section-header">
+        <h2>Top Doctors</h2>
+        
+      
+<span class="view-all" routerLink="/patient/book-appointment">View All</span>
+
+
+      </div>
+
+      <div class="doctor-grid">
+
+        <div class="doctor-card">
+          <div class="avatar">
+            <img src="assets/images/doc1.jpg">
+            <span class="online"></span>
+          </div>
+
+          <h4>Dr. Ahmed Mohamed</h4>
+          <p>Cardiologist</p>
+
+          <div class="meta">
+            ⭐ 4.9 • 10 yrs exp
+          </div>
+
+          <!-- <button>Book Appointment</button> -->
+        <button [routerLink]="['/patient/doctor', 2]">
+          Book Appointment
+        </button>
+        </div>
+
+
+        <div class="doctor-card">
+          <div class="avatar">
+            <img src="assets/images/doc2.jpg">
+          </div>
+
+          <h4>Dr. Sara Ali</h4>
+          <p>Dermatologist</p>
+
+          <div class="meta">
+            ⭐ 4.7 • 7 yrs exp
+          </div>
+
+          <!-- <button>Book Appointment</button> -->
+          <button [routerLink]="['/patient/doctor', 1]">
+            Book Appointment
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+
+    
+    <div class="section appointments">
+      <h2>Upcoming</h2>
+
+      <div class="appointment-card">
+        <img src="assets/images/doc3.jpg">
+
+        <div>
+          <h4>Dr. Khaled Mohamed</h4>
+          <p>Cardiologist</p>
+        </div>
+
+        <span>Tomorrow</span>
+      </div>
+
+      <div class="appointment-card">
+        <img src="assets/images/doc2.jpg">
+
+        <div>
+          <h4>Dr. Sara Ali</h4>
+          <p>Dermatologist</p>
+        </div>
+
+        <span>Sunday</span>
+      </div>
+    </div>
+
+  </div>
+  <div class="section">
+  <h2>Recent Activity</h2>
+
+  <div class="activity-list">
+
+    <div class="activity-item">
+      <div class="icon success">✔</div>
+      <div>
+        <h4>Appointment Booked</h4>
+        <p>You booked Dr. Ahmed</p>
+      </div>
+      <span>2h ago</span>
+    </div>
+
+    <div class="activity-item">
+      <div class="icon info">📄</div>
+      <div>
+        <h4>Report Uploaded</h4>
+        <p>Your blood test was added</p>
+      </div>
+      <span>Yesterday</span>
+    </div>
+
+    <div class="activity-item">
+      <div class="icon warning">⚙</div>
+      <div>
+        <h4>Profile Updated</h4>
+        <p>You changed your info</p>
+      </div>
+      <span>2 days ago</span>
+    </div>
+
+  </div>
+</div>
+<div class="actions">
+
+  <button routerLink="/patient/book-appointment">
+    Book Appointment
+  </button>
+
+  <button routerLink="/patient/medical-records">
+    View Records
+  </button>
+
+  <button routerLink="/patient/profile">
+    Update Profile
+  </button>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+ 

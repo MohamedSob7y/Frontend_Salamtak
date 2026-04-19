@@ -1,0 +1,100 @@
+<div class="login">
+  <div class="left" [ngClass]="role">
+
+    <div>
+      <h2>Salamtak</h2>
+
+      <button class="tag">
+        {{ role === 'patient' ? 'PATIENT PORTAL' : 'DOCTOR PORTAL' }}
+      </button>
+
+      <h1 *ngIf="role === 'patient'">
+        Your health,<br> our priority.
+      </h1>
+
+      <h1 *ngIf="role === 'doctor'">
+        Welcome back,<br><span>Doctor.</span>
+      </h1>
+
+      <p *ngIf="role === 'patient'">
+        Book appointments with top specialists, check your symptoms with AI, and manage your medical history.
+      </p>
+
+      <p *ngIf="role === 'doctor'">
+        Manage your appointments, access patient records, and provide better care — all from one place.
+      </p>
+
+      <ul>
+        <li *ngIf="role === 'patient'">✔ AI-powered symptom analysis</li>
+        <li *ngIf="role === 'patient'">✔ Book appointments in minutes</li>
+        <li *ngIf="role === 'patient'">✔ Access your medical records</li>
+
+        <li *ngIf="role === 'doctor'">✔ View & manage your schedule</li>
+        <li *ngIf="role === 'doctor'">✔ Access patient records</li>
+        <li *ngIf="role === 'doctor'">✔ Update diagnoses</li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      © 2026 Salamtak. All rights reserved.
+    </div>
+
+  </div>
+
+  
+  <div class="right">
+
+    <h2>Sign in as {{ role === 'patient' ? 'Patient' : 'Doctor' }}</h2>
+
+    <p class="signin-text">
+      Don't have an account?
+      <a routerLink="/register">Register here</a>
+    </p>
+
+    <div class="field">
+      <label>Email Address</label>
+      <input type="email" placeholder="{{ role === 'patient' ? 'patient@example.com' : 'doctor@example.com' }}">
+    </div>
+    <div class="password-wrapper">
+  <input 
+    [type]="showPassword ? 'text' : 'password'"
+    placeholder="Enter your password"
+  >
+
+  <span class="eye" (click)="togglePassword()">
+    {{ showPassword ? '👁' : '👁' }}
+  </span>
+</div>
+
+
+
+    <a class="forgot" routerLink="/forgot-password">
+      Forgot password?
+    </a>
+
+<button class="main-btn" (click)="login()">
+  Sign In
+</button>
+
+
+
+    <div class="divider">or</div>
+
+    <div class="switch">
+      <p>
+        Are you a {{ role === 'patient' ? 'doctor' : 'patient' }}?
+      </p>
+
+      <button (click)="switchRole(role === 'patient' ? 'doctor' : 'patient')">
+        Sign in as {{ role === 'patient' ? 'Doctor' : 'Patient' }}
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+

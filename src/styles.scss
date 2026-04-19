@@ -1,0 +1,46 @@
+.btn {
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.btn-primary {
+  background: #16a34a;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #15803d;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+//==========================================================================
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background: #f7f9f8;
+  color: #111;
+}
+
+.container {
+  width: 90%;
+  margin: auto;
+}

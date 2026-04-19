@@ -1,0 +1,45 @@
+<nav class="navbar">
+  <div class="container">
+
+    
+    <div class="logo">
+      <img src="assets/images/logo.png" alt="logo">
+      <span>Salamtak</span>
+    </div>
+
+    
+    <ul class="nav-links">
+<li>
+  <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    Home
+  </a>
+</li>
+
+<li>
+  <a (click)="goToFeatures()">Features</a>
+</li>
+
+      <!-- <li>Find a Doctor</li> -->
+      <li>
+        <a routerLink="/patient/book-appointment">
+          Find a Doctor
+        </a>
+      </li>
+    
+<li>
+  <a (click)="goToHow()">How It Works</a>
+</li>
+
+    <li>
+      <a routerLink="/about">About Us</a>
+    </li>
+    </ul>
+
+    
+    <div class="actions">  
+      <a routerLink="/login" class="btn btn-primary">Sign In</a>
+      <a routerLink="/register" class="btn btn-primary">Sign Up</a>
+    </div>
+
+  </div>
+</nav>

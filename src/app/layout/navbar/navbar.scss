@@ -1,0 +1,101 @@
+.navbar {
+  background: #fff;
+  padding: 18px 0;
+  border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+.container {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo img {
+  width: 100px;   
+  height: 50px;
+  object-fit: contain;
+}
+
+.logo span {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+}
+
+.nav-links li {
+  cursor: pointer;
+  color: #555;
+  font-size: 15px;
+  position: relative;
+  transition: 0.3s;
+}
+
+
+.nav-links li:hover {
+  color: #16a34a;
+}
+
+
+.nav-links .active {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+
+.nav-links li::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  left: 0;
+  bottom: -5px;
+  background: #16a34a;
+  transition: 0.3s;
+}
+
+.nav-links li:hover::after {
+  width: 100%;
+}
+
+.nav-links .active::after {
+  width: 100%;
+}
+
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.nav-links li,
+.nav-links a {
+  text-decoration: none !important;
+}
+
+.nav-links li:hover,
+.nav-links a:hover {
+  text-decoration: none !important;
+}
+
+.nav-links .active {
+  text-decoration: none !important;
+}
