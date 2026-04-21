@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit {
     address: new FormControl(''),
     emergencyContact: new FormControl(''),
     avatar: new FormControl('assets/images/default-user.png')
+    
   });
 
   ngOnInit() {

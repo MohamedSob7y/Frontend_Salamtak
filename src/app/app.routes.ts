@@ -58,6 +58,12 @@ export const routes: Routes = [
       import('./features/patient/doctor-profile/doctor-profile')
         .then(m => m.DoctorProfileComponent)
   },
+  {
+  path: 'patient/notifications',
+  loadComponent: () =>
+    import('./features/patient/notifications/notifications')
+      .then(m => m.NotificationsComponent)
+},
 {
   path: 'chatbot',
   loadComponent: () =>

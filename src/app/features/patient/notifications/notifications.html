@@ -1,0 +1,225 @@
+<div class="notifications-page">
+
+
+  <div class="page-layout">
+
+
+    <aside class="sidebar">
+      <div>
+        <h2 class="sidebar-logo">Salamtak</h2>
+
+        <nav class="sidebar-menu">
+          <a routerLink="/patient/dashboard" class="sidebar-link">Dashboard</a>
+          <a routerLink="/patient/appointments" class="sidebar-link">Appointments</a>
+          <a routerLink="/patient/profile" class="sidebar-link">Profile</a>
+          <a routerLink="/patient/medical-records" class="sidebar-link">Medical Records</a>
+          <a routerLink="/chatbot" class="sidebar-link">AI Assistant</a>
+          <a routerLink="/patient/notifications" class="sidebar-link active">Notifications</a>
+        </nav>
+
+        <a routerLink="/patient/book-appointment" class="sidebar-cta">
+          + Book Appointment
+        </a>
+      </div>
+
+      <div class="sidebar-bottom">
+        <a routerLink="/about" class="sidebar-bottom-link">Help Center</a>
+        <a routerLink="/login" class="sidebar-bottom-link logout-link">Logout</a>
+      </div>
+    </aside>
+
+
+    <main class="content">
+
+      <div class="content-header">
+        <div>
+          <h1>Notifications</h1>
+          <p>Manage your appointments, reports, and important health alerts.</p>
+        </div>
+
+        <div class="filter-pills">
+
+          <button class="pill" [class.active]="filter === 'all'" (click)="setFilter('all')">
+            All
+          </button>
+
+          <button class="pill" [class.active]="filter === 'unread'" (click)="setFilter('unread')">
+            Unread
+          </button>
+
+          <button class="pill" [class.active]="filter === 'important'" (click)="setFilter('important')">
+            Important
+          </button>
+        </div>
+      </div>
+
+
+      <div class="hero-row">
+
+
+        <section class="critical-card">
+          <div class="critical-icon">!</div>
+
+          <div class="critical-body">
+            <div class="critical-topline">
+              <span class="critical-label">CRITICAL ALERT</span>
+              <span class="critical-time">12:04 PM · TODAY</span>
+            </div>
+
+            <h3>Abnormal Lab Results</h3>
+            <p>
+              Your potassium levels appear low. Please review your medical report
+              and follow up with your doctor if needed.
+            </p>
+
+
+            <div class="email-alert">
+              📧 A notification has also been sent to your email.
+            </div>
+            <div class="gmail-box">
+
+              <span class="gmail-text">
+                Check your email for full details
+              </span>
+
+              <a href="https://mail.google.com" target="_blank" class="gmail-btn" title="Open Gmail">
+                <img src="https://cdn-icons-png.flaticon.com/512/281/281769.png">
+                Open Gmail
+              </a>
+
+            </div>
+
+            <div class="critical-actions">
+              <a routerLink="/patient/medical-records" class="btn btn-danger">View Report</a>
+              <a routerLink="/patient/appointments" class="btn btn-light">Related Appointment</a>
+            </div>
+          </div>
+        </section>
+
+
+        <section class="status-card">
+          <h3>Queue Status</h3>
+          <div class="status-number">14</div>
+          <div class="status-subtitle">active alerts</div>
+
+          <div class="progress-track">
+            <div class="progress-bar"></div>
+          </div>
+
+          <div class="status-footer">75% completion rate</div>
+        </section>
+      </div>
+
+
+      <section class="updates-section">
+        <div class="section-head">
+          <h2>Recent Updates</h2>
+
+
+        </div>
+
+
+
+        <details class="notification-item" *ngFor="let item of filteredNotifications; let i = index"
+          [open]="opened === i">
+
+          <summary class="notification-summary" (click)="toggleOpen(i); $event.preventDefault()">
+
+            <div class="notification-left">
+
+              <div class="notification-badge" [ngClass]="{
+          'badge-green': item.type === 'success',
+          'badge-blue': item.type === 'info',
+          'badge-gray': item.type === 'default'
+        }">
+              </div>
+
+              <div class="notification-text">
+                <h4>{{ item.title }}</h4>
+                <p>{{ item.message }}</p>
+              </div>
+
+            </div>
+
+            <span class="notification-time">{{ item.time }}</span>
+
+          </summary>
+
+          <div class="notification-details">
+
+            <p>{{ item.details }}</p>
+
+            <div class="notification-actions">
+
+              <button class="btn btn-primary" (click)="openRelated(item, $event)">
+                Open
+              </button>
+
+              <button class="btn btn-light" *ngIf="!item.read" (click)="markAsRead(item, $event)">
+                Mark as Read
+              </button>
+
+            </div>
+
+          </div>
+
+        </details>
+
+        <details class="notification-item">
+          <summary class="notification-summary">
+            <div class="notification-left">
+              <div class="notification-badge badge-blue"></div>
+
+              <div class="notification-text">
+                <h4>Medical Report Ready</h4>
+                <p>Your blood test results are available now</p>
+              </div>
+            </div>
+
+            <span class="notification-time">Yesterday</span>
+          </summary>
+
+          <div class="notification-details">
+            <p>
+              A new report was added to your medical records. Review it and keep
+              it saved for your next doctor visit.
+            </p>
+
+            <div class="notification-actions">
+              <a routerLink="/patient/medical-records" class="btn btn-primary">Open Report</a>
+            </div>
+          </div>
+        </details>
+
+
+        <details class="notification-item">
+          <summary class="notification-summary">
+            <div class="notification-left">
+              <div class="notification-badge badge-gray"></div>
+
+              <div class="notification-text">
+                <h4>Appointment Reminder</h4>
+                <p>You have an appointment tomorrow with Dr. Sara</p>
+              </div>
+            </div>
+
+            <span class="notification-time">2 days ago</span>
+          </summary>
+
+          <div class="notification-details">
+            <p>
+              Please be ready 10 minutes before your appointment time and review
+              your doctor profile if needed.
+            </p>
+
+            <div class="notification-actions">
+              <a routerLink="/patient/appointments" class="btn btn-primary">View Appointment</a>
+              <a routerLink="/patient/doctor/1" class="btn btn-secondary">Doctor Profile</a>
+            </div>
+          </div>
+        </details>
+
+      </section>
+    </main>
+  </div>
+</div>

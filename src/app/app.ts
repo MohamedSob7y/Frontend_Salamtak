@@ -12,3 +12,6 @@ import { FooterComponent } from './layout/footer/footer';
   styleUrl: './app.scss'
 })
 export class App {}
+
+
+

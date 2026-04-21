@@ -1,1 +1,127 @@
-<p>appointments works!</p>
+<div class="appointments-page">
+
+  
+  <div class="sidebar">
+    <h2>Salamtak</h2>
+
+    <ul>
+      <li routerLink="/patient/dashboard" routerLinkActive="active">Dashboard</li>
+      <li routerLink="/patient/appointments" routerLinkActive="active">Appointments</li>
+      <li routerLink="/patient/profile" routerLinkActive="active">Profile</li>
+      <li routerLink="/chatbot" routerLinkActive="active">Chatbot</li>
+    </ul>
+  </div>
+
+  
+  <div class="main">
+
+    <div class="header">
+      <h1>Your Appointments</h1>
+
+      <button class="book-btn" (click)="goToBook()">
+        + New Appointment
+      </button>
+    </div>
+
+    
+    <div class="stats">
+      <div class="stat-card">
+        <h3>{{ upcoming.length }}</h3>
+        <p>Upcoming</p>
+      </div>
+
+      <div class="stat-card">
+        <h3>{{ history.length }}</h3>
+        <p>History</p>
+      </div>
+    </div>
+
+    
+    <div class="tabs">
+      <button [class.active]="activeTab === 'upcoming'" (click)="activeTab='upcoming'">
+        Upcoming
+      </button>
+
+      <button [class.active]="activeTab === 'history'" (click)="activeTab='history'">
+        History
+      </button>
+    </div>
+
+   
+    <div *ngIf="activeTab === 'upcoming'">
+
+      <div class="appointment-card"
+           *ngFor="let a of upcoming"
+           (click)="goToBook()">
+
+        <div class="left">
+          <h3>{{ a.doctor }}</h3>
+          <p>{{ a.specialty }}</p>
+          <span>📅 {{ a.date }} - {{ a.time }}</span>
+        </div>
+
+        <div class="right">
+
+          <span class="status" [ngClass]="a.status.toLowerCase()">
+            {{ a.status }}
+          </span>
+
+         
+          <button 
+            class="cancel"
+            *ngIf="a.status === 'Confirmed'"
+            (click)="$event.stopPropagation(); cancelAppointment(a.id)">
+            Cancel
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+   
+    <div *ngIf="activeTab === 'history'">
+
+      <div class="appointment-card history"
+           *ngFor="let a of history">
+
+        <div class="left">
+          <h3>{{ a.doctor }}</h3>
+          <p>{{ a.specialty }}</p>
+          <span>📅 {{ a.date }} - {{ a.time }}</span>
+        </div>
+
+        <div class="right">
+          <span class="status completed">{{ a.status }}</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  
+  <div class="right-panel">
+
+    <div class="box">
+      <h3>Quick Actions</h3>
+
+      <div class="action" (click)="goToBook()">
+        🔍 Find Doctor
+      </div>
+
+      <div class="action ai" (click)="goToChatbot()">
+        🤖 Ask AI Assistant
+      </div>
+    </div>
+
+    <div class="box tips">
+      <h4>Health Tip 💡</h4>
+      <p>Drink water regularly and keep your appointments on time.</p>
+    </div>
+
+  </div>
+
+</div>

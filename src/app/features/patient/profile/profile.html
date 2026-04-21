@@ -1,3 +1,232 @@
+<!-- <div class="profile-page">
+
+
+  <div class="profile-header">
+    <div class="left">
+<img 
+  [src]="form.get('avatar')?.value" 
+  (error)="form.patchValue({ avatar: 'assets/images/user.png' })"
+  class="avatar"
+/>
+
+
+      <div>
+        <h2>{{ form.get('name')?.value || 'Patient Name' }}</h2>
+        <p>{{ form.get('email')?.value }}</p>
+      </div>
+    </div>
+
+    <div class="right">
+      <button *ngIf="!editMode" class="btn outline" (click)="toggleEdit()">
+        Edit Profile
+      </button>
+
+      <ng-container *ngIf="editMode">
+        <button class="btn primary" (click)="save()" [disabled]="saving">
+          {{ saving ? 'Saving...' : 'Save' }}
+        </button>
+        <button class="btn ghost" (click)="cancel()">Cancel</button>
+      </ng-container>
+    </div>
+  </div>
+
+
+ 
+  <div class="profile-stats">
+    <div class="stat"><h3>5</h3><p>Appointments</p></div>
+    <div class="stat"><h3>3</h3><p>Doctors</p></div>
+    <div class="stat"><h3>8</h3><p>Reports</p></div>
+  </div>
+
+
+  <div class="profile-grid">
+
+
+<div class="card">
+
+ 
+  <div *ngIf="!editMode" class="view-mode">
+
+    <div class="grid">
+
+      <div class="item">
+        <label>Name</label>
+        <p>{{ form.get('name')?.value || '-' }}</p>
+      </div>
+
+      <div class="item">
+        <label>Email</label>
+        <p>{{ form.get('email')?.value || '-' }}</p>
+      </div>
+
+      <div class="item">
+        <label>Phone</label>
+        <p>{{ form.get('phone')?.value || '-' }}</p>
+      </div>
+
+      <div class="item">
+        <label>Date of Birth</label>
+        <p>{{ form.get('dateOfBirth')?.value || '-' }}</p>
+      </div>
+
+      <div class="item">
+        <label>Gender</label>
+        <p>{{ form.get('gender')?.value || '-' }}</p>
+      </div>
+
+      <div class="item">
+        <label>Emergency Contact</label>
+        <p>{{ form.get('emergencyContact')?.value || '-' }}</p>
+      </div>
+
+      <div class="item full">
+        <label>Address</label>
+        <p>{{ form.get('address')?.value || '-' }}</p>
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <form *ngIf="editMode" [formGroup]="form" class="form">
+
+    <div class="grid">
+
+      <div class="field">
+        <label>Name</label>
+        <input formControlName="name" />
+      </div>
+
+      <div class="field">
+        <label>Email</label>
+        <input formControlName="email" />
+      </div>
+
+      <div class="field">
+        <label>Phone</label>
+        <input formControlName="phone" />
+      </div>
+
+      <div class="field">
+        <label>Date of Birth</label>
+        <input type="date" formControlName="dateOfBirth" />
+      </div>
+
+      <div class="field">
+        <label>Gender</label>
+        <select formControlName="gender">
+          <option value="">Select</option>
+          <option>Male</option>
+          <option>Female</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Emergency Contact</label>
+        <input formControlName="emergencyContact" />
+      </div>
+
+      <div class="field full">
+        <label>Address</label>
+        <textarea formControlName="address"></textarea>
+      </div>
+
+    </div>
+
+  </form>
+
+</div>
+
+    
+ 
+    <div class="profile-side">
+
+     
+      <div class="side-card">
+        <h3>Upcoming</h3>
+
+        <div class="appointment">
+          <img src="assets/images/doc1.jpg">
+          <div>
+            <h4>Dr. Ahmed</h4>
+            <p>Cardio</p>
+          </div>
+          <span>Tomorrow</span>
+        </div>
+
+        <div class="appointment">
+          <img src="assets/images/doc2.jpg">
+          <div>
+            <h4>Dr. Sara</h4>
+            <p>Dermatology</p>
+          </div>
+          <span>Sunday</span>
+        </div>
+      </div>
+
+
+    
+      <div class="side-card">
+        <h3>Your Doctors</h3>
+
+        <div class="doctor">
+          <img src="assets/images/doc3.jpg">
+          <span>Dr. Omar</span>
+        </div>
+
+        
+      </div>
+      <div class="side-card reports-card">
+  <div class="card-header">
+    <h3>Medical Reports</h3>
+    <a routerLink="/patient/medical-records" class="view-all-link">View All</a>
+  </div>
+
+  <div class="report" routerLink="/patient/medical-records">
+    <span>Blood Test</span>
+    <small>2 days ago</small>
+  </div>
+
+  <div class="report" routerLink="/patient/medical-records">
+    <span>X-Ray</span>
+    <small>Last week</small>
+  </div>
+</div>
+    </div>
+
+  </div>
+
+
+  
+  <div class="activity">
+    <h3>Recent Activity</h3>
+
+    <div class="timeline-item">
+      <div class="dot green"></div>
+      <p>Booked appointment</p>
+      <span>2h ago</span>
+    </div>
+
+    <div class="timeline-item">
+      <div class="dot blue"></div>
+      <p>Uploaded report</p>
+      <span>Yesterday</span>
+    </div>
+
+    <div class="timeline-item">
+      <div class="dot orange"></div>
+      <p>Updated profile</p>
+      <span>2 days ago</span>
+    </div>
+
+  </div>
+
+</div> -->
+
+
+
+
 <div class="profile-page">
 
 
@@ -17,6 +246,13 @@
     </div>
 
     <div class="right">
+
+      <!-- 🔔 Notifications -->
+      <div class="notification-icon" routerLink="/patient/notifications">
+        🔔
+        <span class="notification-badge">3</span>
+      </div>
+
       <button *ngIf="!editMode" class="btn outline" (click)="toggleEdit()">
         Edit Profile
       </button>
