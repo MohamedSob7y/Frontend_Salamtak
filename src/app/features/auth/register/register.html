@@ -1,114 +1,75 @@
 <div class="register">
-
-
   <div class="left" [ngClass]="role">
     <div class="brand">Salamtak</div>
-
     <button class="tag">
       {{ role === 'doctor' ? 'JOIN AS DOCTOR' : 'JOIN AS PATIENT' }}
     </button>
-
     <h1 *ngIf="role === 'patient'">
       Start your<br>health journey.
     </h1>
-
     <h1 *ngIf="role === 'doctor'">
       Grow your<br><span>practice online.</span>
     </h1>
-
     <p *ngIf="role === 'patient'">
       Create your free account and get access to AI-powered symptom analysis,
       verified doctors, and your unified medical records.
     </p>
-
     <p *ngIf="role === 'doctor'">
       Join thousands of verified doctors on Salamtak. Reach more patients,
       manage appointments efficiently, and provide better care.
     </p>
-
     <ul *ngIf="role === 'patient'">
       <li>✔ Free AI symptom checker</li>
       <li>✔ Book appointments instantly</li>
       <li>✔ Secure unified medical records</li>
       <li>✔ Access from anywhere, anytime</li>
     </ul>
-
     <ul *ngIf="role === 'doctor'">
       <li>✔ Verified doctor profile visible to patients</li>
       <li>✔ Smart appointment scheduling system</li>
       <li>✔ Access to patient medical histories</li>
       <li>✔ Increase your patient reach across Egypt</li>
     </ul>
-
     <small>© 2026 Salamtak. All rights reserved.</small>
   </div>
-
-
   <div class="right">
     <h2>Register as {{ role === 'doctor' ? 'Doctor' : 'Patient' }}</h2>
-
     <p class="signin-text">
-      Already have an account?
-      <a routerLink="/login">Sign in here</a>
-    </p>
-
+  Already have an account?
+  <span class="signin-link" routerLink="/login">Sign in here</span>
+</p>
     <form (ngSubmit)="register()">
-
       <div class="field">
         <label>Full Name</label>
-        <input
-          type="text"
-          [(ngModel)]="user.name"
-          name="name"
-          placeholder="{{ role === 'doctor' ? 'Dr. Ahmed Mohamed' : 'Your full name' }}"
-          required>
+        <input type="text" [(ngModel)]="user.name" name="name"
+          placeholder="{{ role === 'doctor' ? 'Dr. Ahmed Mohamed' : 'Your full name' }}" required>
       </div>
-
       <div class="field">
         <label>Email Address</label>
-        <input
-          type="email"
-          [(ngModel)]="user.email"
-          name="email"
-          placeholder="{{ role === 'doctor' ? 'doctor@example.com' : 'patient@example.com' }}"
-          required>
+        <input type="email" [(ngModel)]="user.email" name="email"
+          placeholder="{{ role === 'doctor' ? 'doctor@example.com' : 'patient@example.com' }}" required>
       </div>
-
       <div class="field">
         <label>Phone Number</label>
-        <input
-          type="text"
-          [(ngModel)]="user.phone"
-          name="phone"
-          placeholder="+20 1XX XXX XXXX"
-          required>
+        <input type="text" [(ngModel)]="user.phone" name="phone" placeholder="+20 1XX XXX XXXX" required>
       </div>
-
-   
       <div *ngIf="role === 'patient'" class="row-2">
         <div class="field">
           <label>Date of Birth</label>
-          <input
-            type="date"
-            [(ngModel)]="user.dateOfBirth"
-            name="dateOfBirth"
-            required>
+          <input type="date" [(ngModel)]="user.dateOfBirth" name="dateOfBirth" required>
         </div>
-
         <div class="field">
           <label>Gender</label>
-          <select [(ngModel)]="user.gender" name="gender" required>
-            <option value="">Select</option>
+          <select [(ngModel)]="user.gender" name="gender" required [ngClass]="{ 'placeholder': !user.gender }">
+            <option value="">Select your gender</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
         </div>
       </div>
-
-      
       <div *ngIf="role === 'doctor'" class="field">
         <label>Medical Specialty</label>
-        <select [(ngModel)]="user.specialty" name="specialty" required>
+        <select [(ngModel)]="user.specialty" name="specialty" required [ngClass]="{ 'placeholder': !user.specialty }">
           <option value="">Select your specialty</option>
           <option value="cardiology">Cardiology</option>
           <option value="dermatology">Dermatology</option>
@@ -118,70 +79,60 @@
           <option value="orthopedics">Orthopedics</option>
         </select>
       </div>
-
       <div *ngIf="role === 'doctor'" class="field">
         <label>Medical License Number</label>
-        <input
-          type="text"
-          [(ngModel)]="user.licenseNumber"
-          name="licenseNumber"
-          placeholder="e.g. EG-MED-123456"
+        <input type="text" [(ngModel)]="user.licenseNumber" name="licenseNumber" placeholder="e.g. EG-MED-123456"
           required>
-        <small>Format: XX-XXX-123456 (e.g. EG-MED-123456)</small>
+        <small>Format: XX-XXX-123456</small>
       </div>
-
+      <div *ngIf="role === 'patient'" class="field">
+        <label>Medical Report (Optional)</label>
+        <input type="file" (change)="onPatientFile($event)">
+        <small>Upload any previous medical report if available</small>
+      </div>
+      <div *ngIf="role === 'doctor'" class="field">
+        <label>Upload CV</label>
+        <input type="file" (change)="onDoctorCV($event)">
+      </div>
+      <div *ngIf="role === 'doctor'" class="field">
+        <label>Upload Medical ID</label>
+        <input type="file" (change)="onDoctorID($event)">
+      </div>
       <div class="field">
         <label>Password</label>
-        <input
-          type="password"
-          [(ngModel)]="user.password"
-          name="password"
-          placeholder="Create a strong password"
+        <input type="password" [(ngModel)]="user.password" name="password" placeholder="Create a strong password"
           required>
-
         <div *ngIf="role === 'doctor'" class="password-hints">
           <span>○ At least 8 characters</span>
           <span>○ One uppercase letter</span>
           <span>○ One number</span>
         </div>
       </div>
-
       <div class="field">
         <label>Confirm Password</label>
-        <input
-          type="password"
-          [(ngModel)]="confirmPassword"
-          name="confirmPassword"
-          placeholder="Repeat your password"
+        <input type="password" [(ngModel)]="confirmPassword" name="confirmPassword" placeholder="Repeat your password"
           required>
       </div>
-
       <div class="terms">
         <input type="checkbox" [(ngModel)]="agreeTerms" name="agreeTerms">
-        <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+        <span>I agree to the <a href="#">Terms</a> and <a href="#">Privacy</a></span>
       </div>
-
       <button type="submit" class="main-btn">
         Create {{ role === 'doctor' ? 'Doctor' : 'Patient' }} Account
       </button>
     </form>
-
     <div class="bottom-section">
       <div class="switch">
         <p *ngIf="role === 'doctor'">Are you a patient?</p>
         <p *ngIf="role === 'patient'">Are you a doctor?</p>
-
-        <button
-          type="button"
-          (click)="switchRole(role === 'doctor' ? 'patient' : 'doctor')">
-          Register as {{ role === 'doctor' ? 'Patient' : 'Doctor' }}
+        <button class="tag" (click)="switchRole(role === 'doctor' ? 'patient' : 'doctor')">
+          {{ role === 'doctor' ? 'JOIN AS DOCTOR' : 'JOIN AS PATIENT' }}
         </button>
-      </div>
-         <div class="footer">
-    © 2026 Salamtak. All rights reserved.
-  </div>
-    </div>
-  
-  </div>
 
-</div>
+        <div class="footer">
+          © 2026 Salamtak. All rights reserved.
+        </div>
+      </div>
+
+    </div>
+  </div>

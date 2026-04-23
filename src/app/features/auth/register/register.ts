@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-
+import { FormsModule } from '@angular/forms';  
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [FormsModule ,CommonModule,RouterModule], 
   templateUrl: './register.html',
   styleUrls: ['./register.scss']
 })
@@ -14,24 +13,34 @@ export class RegisterComponent {
 
   role: 'patient' | 'doctor' = 'patient';
 
-  user: any = {
-    name: '',
-    email: '',
-    phone: '',
-    dateOfBirth: '',
-    gender: '',
-    specialty: '',
-    licenseNumber: '',
-    password: ''
-  };
+  user: any = { specialty: '' ,gender: '',};
 
   confirmPassword = '';
   agreeTerms = false;
 
+  
+  patientReport: any = null;
+  doctorCV: any = null;
+  doctorID: any = null;
+
   constructor(private router: Router) {}
 
-  switchRole(role: 'patient' | 'doctor') {
+  switchRole(role: any) {
     this.role = role;
+  }
+
+
+  onPatientFile(e: any) {
+    this.patientReport = e.target.files[0]?.name;
+  }
+
+ 
+  onDoctorCV(e: any) {
+    this.doctorCV = e.target.files[0]?.name;
+  }
+
+  onDoctorID(e: any) {
+    this.doctorID = e.target.files[0]?.name;
   }
 
   register() {
@@ -42,16 +51,24 @@ export class RegisterComponent {
     }
 
     if (!this.agreeTerms) {
-      alert('You must agree to the terms first');
+      alert('Agree to terms');
       return;
     }
 
-    this.user.role = this.role;
+    if (this.role === 'doctor') {
+      if (!this.doctorCV || !this.doctorID) {
+        alert('Upload CV and ID');
+        return;
+      }
+    }
 
-   
+    this.user.role = this.role;
+    this.user.patientReport = this.patientReport;
+    this.user.doctorCV = this.doctorCV;
+    this.user.doctorID = this.doctorID;
+
     localStorage.setItem('user', JSON.stringify(this.user));
 
-  
     if (this.role === 'patient') {
       this.router.navigate(['/patient/dashboard']);
     } else {
@@ -59,6 +76,3 @@ export class RegisterComponent {
     }
   }
 }
-
-
-
