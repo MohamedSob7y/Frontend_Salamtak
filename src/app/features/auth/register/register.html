@@ -39,6 +39,31 @@
   <span class="signin-link" routerLink="/login">Sign in here</span>
 </p>
     <form (ngSubmit)="register()">
+
+<!-- Profile Image Upload -->
+<div class="field">
+  <label>Profile Image</label>
+
+  <input
+    type="file"
+    accept="image/*"
+    (change)="onProfileImage($event)"
+  />
+
+  <!-- Preview -->
+  <img
+    *ngIf="profilePreview"
+    [src]="profilePreview"
+    class="profile-preview"
+  />
+</div>
+
+
+
+      
+
+
+
       <div class="field">
         <label>Full Name</label>
         <input type="text" [(ngModel)]="user.name" name="name"

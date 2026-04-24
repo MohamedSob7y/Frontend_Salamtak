@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';  
 import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -13,15 +14,23 @@ export class RegisterComponent {
 
   role: 'patient' | 'doctor' = 'patient';
 
-  user: any = { specialty: '' ,gender: '',};
+  user: any = { 
+    specialty: '',
+    gender: '',
+    profileImage: ''  
+  };
 
   confirmPassword = '';
   agreeTerms = false;
 
-  
+ 
   patientReport: any = null;
   doctorCV: any = null;
   doctorID: any = null;
+
+  
+  profileImageFile: any = null;
+  profilePreview: any = null;
 
   constructor(private router: Router) {}
 
@@ -29,12 +38,12 @@ export class RegisterComponent {
     this.role = role;
   }
 
-
+  
   onPatientFile(e: any) {
     this.patientReport = e.target.files[0]?.name;
   }
 
- 
+  
   onDoctorCV(e: any) {
     this.doctorCV = e.target.files[0]?.name;
   }
@@ -43,6 +52,23 @@ export class RegisterComponent {
     this.doctorID = e.target.files[0]?.name;
   }
 
+  
+  onProfileImage(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    this.profileImageFile = file;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.profilePreview = reader.result;
+      this.user.profileImage = reader.result; 
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  
   register() {
 
     if (this.user.password !== this.confirmPassword) {
@@ -62,13 +88,18 @@ export class RegisterComponent {
       }
     }
 
+   
     this.user.role = this.role;
     this.user.patientReport = this.patientReport;
     this.user.doctorCV = this.doctorCV;
     this.user.doctorID = this.doctorID;
 
+  
+    this.user.profileImage = this.profilePreview;
+
     localStorage.setItem('user', JSON.stringify(this.user));
 
+  
     if (this.role === 'patient') {
       this.router.navigate(['/patient/dashboard']);
     } else {

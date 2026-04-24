@@ -62,16 +62,6 @@ export const routes: Routes = [
     import('./features/chatbot/chatbot')
       .then(m => m.ChatbotComponent)
 },
-
-
-  {
-    path: 'chatbot',
-    loadComponent: () =>
-      import('./features/chatbot/chatbot')
-        .then(m => m.ChatbotComponent)
-  },
-
-
   { path: 'about', component: AboutComponent },
 
   {

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
  import { RouterModule } from '@angular/router';
- 
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-navbar',
@@ -11,7 +10,6 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
 constructor(private router: Router) {}
-
 goToFeatures() {
   this.router.navigate(['/']).then(() => {
     setTimeout(() => {
@@ -28,8 +26,13 @@ goToHow() {
     }, 100);
   });
 }
+handleFindDoctor() {
+  const user = localStorage.getItem('user');
+  if (user) {
+    this.router.navigate(['/patient/book-appointment']);
+  } else {
+    localStorage.setItem('redirectAfterLogin', '/patient/book-appointment');
+    this.router.navigate(['/login']);
+  }
 }
-
-
-
-
+}
