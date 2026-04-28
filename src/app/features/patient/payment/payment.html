@@ -1,1 +1,134 @@
-<h1>Payment Page Works</h1>
+<div class="page">
+    <aside class="sidebar">
+        <h2>Medical Portal</h2>
+
+        <nav>
+
+            <a routerLink="/patient/dashboard" routerLinkActive="active">
+                DashBoard
+            </a>
+
+            <a routerLink="/patient/appointments" routerLinkActive="active">
+                Appiontments
+            </a>
+
+            <a routerLink="/patient/book-appointment" routerLinkActive="active">
+                BookAppiontment
+            </a>
+
+            <a routerLink="/patient/payment" routerLinkActive="active">
+                Payments
+            </a>
+
+            <a routerLink="/patient/medical-records" routerLinkActive="active">
+                Reports
+            </a>
+
+        </nav>
+
+        <button class="new-btn" (click)="goToAppointment()">
+            + New Appointment
+        </button>
+    </aside>
+
+
+    
+    <main class="content">
+
+        <h1>Secure Checkout</h1>
+
+       
+        <div class="methods">
+
+            <div class="method" [class.active]="selectedMethod==='card'" (click)="selectMethod('card')">
+                💳 Credit / Debit
+            </div>
+
+            <div class="method" [class.active]="selectedMethod==='insurance'" (click)="selectMethod('insurance')">
+                🛡 Insurance
+            </div>
+
+            <div class="method" [class.active]="selectedMethod==='wallet'" (click)="selectMethod('wallet')">
+                👛 Wallet
+            </div>
+
+        </div>
+
+
+        
+        <div *ngIf="selectedMethod==='card'" class="form-card">
+
+            <label>Cardholder Name</label>
+            <input [(ngModel)]="cardName" placeholder="Dr. Sarah Jenkins">
+
+            <label>Card Number</label>
+            <input [(ngModel)]="cardNumber" placeholder="**** **** **** 4242">
+
+            <div class="row">
+                <input [(ngModel)]="expiry" placeholder="MM / YY">
+                <input [(ngModel)]="cvv" placeholder="CVV">
+            </div>
+
+           
+            <div class="other-methods">
+                <div class="method-chip" (click)="payVodafone()">
+                    <span class="circle red">V</span>
+                    Vodafone Cash
+                </div>
+
+                <div class="method-chip" (click)="payFawry()">
+                    <span class="circle blue">F</span>
+                    Fawry
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+
+    
+    <aside class="summary">
+
+        <h3>Order Summary</h3>
+
+        <div class="line">
+            <span>Consultation</span>
+            <span>{{ consultation }} EGP</span>
+        </div>
+
+        <div class="line">
+            <span>Service Fee</span>
+            <span>{{ service }} EGP</span>
+        </div>
+
+        <div class="line">
+            <span>Tax</span>
+            <span>{{ tax }} EGP</span>
+        </div>
+
+        <div class="total">
+            Total {{ total }} EGP
+        </div>
+
+        <button class="pay-btn" (click)="openConfirm()">
+            🔒 Pay Securely
+        </button>
+
+    </aside>
+
+</div>
+
+
+
+<div class="modal" *ngIf="showModal">
+    <div class="modal-box">
+        <h3>Confirm Payment</h3>
+        <p>Are you sure you want to proceed?</p>
+
+        <div class="actions">
+            <button class="yes" (click)="confirmPayment()">Yes</button>
+            <button class="no" (click)="cancelPayment()">No</button>
+        </div>
+    </div>
+</div>

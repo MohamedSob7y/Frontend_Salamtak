@@ -1,1 +1,67 @@
-<h1>Payment Confirmation Works</h1>
+<div class="confirmation">
+    <h2 class="brand">Salamtak</h2>
+    <div class="success-icon">
+        ✔
+    </div>
+
+
+    <h1>Payment Successful</h1>
+
+    <p class="subtitle">
+        Your consultation has been confirmed.
+        A receipt has been sent to your email.
+    </p>
+
+
+    <div class="card">
+
+        <div class="top">
+            <span>Transaction Reference</span>
+            <strong>{{ payment.id || 'TXN-00000' }}</strong>
+        </div>
+
+        <div class="doctor">
+            <div class="avatar">
+                <img src="assets/images/doc1.jpg" alt="doctor">
+            </div>
+            <div>
+                <p>Practitioner</p>
+                <h3>Dr. Ahmed Khalil</h3>
+            </div>
+        </div>
+
+        <div class="details">
+            <div>
+                <p>Date & Time</p>
+                <strong>{{ today }}</strong>
+            </div>
+
+            <div>
+                <p>Method</p>
+                <strong>Visa **** 4242</strong>
+            </div>
+        </div>
+
+        <div class="amount">
+            <p>Amount Paid</p>
+            <h2>{{ payment.total || 0 }} EGP</h2>
+        </div>
+
+        <div class="status">PAID IN FULL</div>
+
+    </div>
+
+
+    <button class="download" (click)="downloadReceipt()">
+        ⬇ Download Receipt
+    </button>
+
+    <button class="back" (click)="goDashboard()">
+        ← Back to Dashboard
+    </button>
+
+    <p class="support">
+        Need help? <span>Contact Support</span>
+    </p>
+
+</div>
