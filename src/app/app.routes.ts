@@ -70,10 +70,11 @@ export const routes: Routes = [
   },
 
   {
-    path: 'doctor/dashboard',
-    component: DoctorDashboardComponent
-  },
-
+  path: 'doctor/dashboard',
+  loadComponent: () =>
+    import('./features/doctor/dashboard/dashboard')
+      .then(m => m.DoctorDashboardComponent)
+},
   {
     path: 'patient/payment',
     loadComponent: () =>
@@ -87,7 +88,16 @@ export const routes: Routes = [
       import('./features/patient/payment-confirmation/payment-confirmation')
         .then(m => m.PaymentConfirmationComponent)
   },
-
+{
+    path: 'doctor/appointments',
+    loadComponent: () =>
+      import('./features/doctor/appointments/appointments')
+        .then(m => m.AppointmentsComponent) // Make sure this matches your actual component class name!
+  },
+  {
+    path: 'doctor/dashboard',
+    component: DoctorDashboardComponent
+  },
   {
     path: '**',
     redirectTo: ''

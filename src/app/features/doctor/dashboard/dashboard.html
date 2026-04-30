@@ -1,1 +1,190 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+  
+  <div class="dashboard-header">
+    <div class="profile-section">
+      <div class="profile-img-wrapper">
+        <img [src]="userProfilePicUrl" alt="Patient Profile" onerror="this.src='https://via.placeholder.com/50'">
+      </div>
+      <div class="profile-text">
+        <h1 class="profile-name">{{userName}}</h1>
+        <p class="profile-email">{{userEmail}}</p>
+      </div>
+    </div>
+    <div class="actions-section">
+      <button class="btn-outline-green" (click)="onEditProfile()">Edit Profile</button>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <span class="stat-title">Total Patients</span>
+      <h3 class="stat-value">{{ stats.totalPatients }}</h3>
+      <span class="stat-trend positive">+5% this month</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-title">Upcoming Appointments</span>
+      <h3 class="stat-value">{{ stats.upcomingAppointments }}</h3>
+    </div>
+    <div class="stat-card">
+      <span class="stat-title">New Reports</span>
+      <h3 class="stat-value">{{ stats.newReports }}</h3>
+    </div>
+  </div>
+
+  <div class="main-content-grid">
+    
+    <div class="section-container schedule-section">
+      <div class="section-header">
+        <div class="header-titles">
+          <h3>My Weekly Schedule</h3>
+          <span class="subtitle" *ngIf="isScheduleCreated">Your current active schedule</span>
+        </div>
+        
+        <div class="header-actions">
+          <button class="btn-primary" *ngIf="!isScheduleCreated" (click)="openScheduleModal()">
+            Create your schedule
+          </button>
+          <ng-container *ngIf="isScheduleCreated">
+            <button class="btn-outline-green" (click)="openScheduleModal()">Edit</button>
+            <button class="btn-primary" (click)="publishSchedule()">Publish</button>
+          </ng-container>
+        </div>
+      </div>
+      
+      <div class="empty-schedule-state" *ngIf="!isScheduleCreated">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        <p>You haven't set up your weekly availability yet.</p>
+      </div>
+
+      <div class="schedule-table-wrapper" *ngIf="isScheduleCreated">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th *ngFor="let day of daysOfWeek">{{ day }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let time of timeSlots; let i = index">
+              <td class="time-label">{{ time }}</td>
+              <td *ngFor="let day of daysOfWeek">
+                <div class="schedule-slot readonly" 
+                     [ngClass]="{'available': getSlotsForDay(day)[i]?.isAvailable}">
+                  <span class="indicator" *ngIf="getSlotsForDay(day)[i]?.isAvailable"></span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="section-container appointments-section">
+      <div class="section-header">
+        <h3>My Appointments</h3>
+        <a href="#" class="view-all-link">View All</a>
+      </div>
+
+      <div class="appointment-list">
+        <div class="appointment-item" *ngFor="let apt of appointments">
+          <div class="apt-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </div>
+          <div class="apt-details">
+            <h4>{{ apt.patientName }}</h4>
+            <p>{{ apt.type }}</p>
+          </div>
+          <div class="apt-time-info">
+            <span class="apt-date" [ngClass]="{'highlight-text': apt.date === 'Tomorrow' || apt.date === 'Today'}">{{ apt.date }}</span>
+            <span class="apt-time">{{ apt.time }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="bottom-actions">
+        <button class="btn-primary" (click)="onEditProfile()">Edit Profile</button>
+        <button class="btn-primary dark-green">View Patient Records</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="isSchedulePopupOpen">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Select Your Availability</h2>
+      <button class="close-btn" (click)="closeScheduleModal()">&times;</button>
+    </div>
+    
+    <div class="modal-body">
+      <div class="modal-left">
+        <p class="modal-instruction">Click on slots to mark them as available for booking.</p>
+        <div class="schedule-table-wrapper">
+          <table class="schedule-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th *ngFor="let day of daysOfWeek">{{ day }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="timeSlots.length === 0">
+                <td colspan="8" style="text-align: center; padding: 20px; color: var(--text-muted);">
+                  Please check your working hours. No slots fit in this timeframe.
+                </td>
+              </tr>
+              
+              <tr *ngFor="let time of timeSlots; let i = index">
+                <td class="time-label">{{ time }}</td>
+                <td *ngFor="let day of daysOfWeek">
+                  <div class="schedule-slot" 
+                       [ngClass]="{'available': getSlotsForDay(day)[i]?.isAvailable}"
+                       (click)="toggleSlotAvailability(getSlotsForDay(day)[i])">
+                    <span class="indicator"></span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="modal-right">
+        <div class="settings-panel">
+          
+          <div class="form-group">
+            <label>Working Hours</label>
+            <p class="setting-desc">Choose your shift's start and end times.</p>
+            <div class="time-inputs-row">
+              <div class="time-input-col">
+                <label class="sub-label" for="startTime">Start</label>
+                <input type="time" id="startTime" class="form-control" [(ngModel)]="startTime" (ngModelChange)="updateScheduleGrid()">
+              </div>
+              <div class="time-input-col">
+                <label class="sub-label" for="endTime">End</label>
+                <input type="time" id="endTime" class="form-control" [(ngModel)]="endTime" (ngModelChange)="updateScheduleGrid()">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="slotDuration">Slot Duration</label>
+            <p class="setting-desc">Choose the time length for each appointment.</p>
+            <select id="slotDuration" class="form-control" [(ngModel)]="slotDuration" (ngModelChange)="updateScheduleGrid()">
+              <option value="15">15 minutes</option>
+              <option value="30">30 minutes</option>
+              <option value="40">40 minutes</option>
+              <option value="45">45 minutes</option>
+              <option value="60">1 Hour</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="modal-actions">
+          <button class="btn-primary btn-block" (click)="saveSchedule()">Save Schedule</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
