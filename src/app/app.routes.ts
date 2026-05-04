@@ -92,7 +92,7 @@ export const routes: Routes = [
     path: 'doctor/appointments',
     loadComponent: () =>
       import('./features/doctor/appointments/appointments')
-        .then(m => m.AppointmentsComponent) // Make sure this matches your actual component class name!
+        .then(m => m.Appointments) // Make sure this matches your actual component class name!
   },
   {
     path: 'doctor/dashboard',

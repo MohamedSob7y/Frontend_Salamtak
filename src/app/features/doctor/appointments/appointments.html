@@ -1,1 +1,135 @@
-<p>appointments works!</p>
+<div class="page-container">
+  
+  <div class="page-header">
+    <div class="header-text">
+      <h2>Upcoming Appointments</h2>
+      <p class="subtitle">Manage your schedule and view patient bookings.</p>
+    </div>
+    <div class="header-actions">
+      <a routerLink="/doctor/dashboard" class="btn-outline">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Back to Dashboard
+      </a>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-responsive">
+      <table class="appointments-table">
+        <thead>
+          <tr>
+            <th>Patient Name</th>
+            <th>Date & Time</th>
+            <th>Visit Type</th>
+            <th>Contact Info</th>
+            <th>Status</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="appointments.length === 0">
+            <td colspan="6" class="empty-state">
+              <p>No upcoming appointments found.</p>
+            </td>
+          </tr>
+
+          <tr *ngFor="let apt of appointments" [class.cancelled-row]="apt.status === 'Cancelled'">
+            <td class="patient-cell">
+              <div class="avatar">{{ apt.patientName.charAt(0) }}</div>
+              <span class="patient-name">{{ apt.patientName }}</span>
+            </td>
+            <td>
+              <div class="datetime-cell">
+                <span class="date">{{ apt.date }}</span>
+                <span class="time">{{ apt.time }}</span>
+              </div>
+            </td>
+            <td class="type-cell">{{ apt.type }}</td>
+            <td class="contact-cell">{{ apt.contact }}</td>
+            <td>
+              <span class="status-badge" [ngClass]="apt.status.toLowerCase()">
+                {{ apt.status }}
+              </span>
+            </td>
+            <td class="actions-cell text-right">
+              <button class="action-btn view-btn" title="View Details" (click)="viewDetails(apt)">
+                View
+              </button>
+              <button class="action-btn cancel-btn" title="Cancel Appointment" 
+                      (click)="cancelAppointment(apt.id)" 
+                      *ngIf="apt.status !== 'Cancelled'">
+                Cancel
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" *ngIf="isModalOpen && selectedAppointment">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Patient Overview</h2>
+      <button class="close-btn" (click)="closeModal()">&times;</button>
+    </div>
+    
+    <div class="modal-body">
+      <div class="patient-profile-header">
+        <div class="avatar large">{{ selectedAppointment.patientName.charAt(0) }}</div>
+        <div>
+          <h3 class="modal-patient-name">{{ selectedAppointment.patientName }}</h3>
+          <p class="modal-patient-id">ID: {{ selectedAppointment.id }}</p>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Age</span>
+          <span class="info-value">{{ selectedAppointment.age }} Years</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Gender</span>
+          <span class="info-value">{{ selectedAppointment.gender }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Blood Type</span>
+          <span class="info-value">{{ selectedAppointment.bloodType }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Contact</span>
+          <span class="info-value">{{ selectedAppointment.contact }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Appointment Date</span>
+          <span class="info-value">{{ selectedAppointment.date }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Time</span>
+          <span class="info-value">{{ selectedAppointment.time }}</span>
+        </div>
+      </div>
+
+      <div class="notes-section">
+        <span class="info-label">Reason for Visit / Notes</span>
+        <div class="notes-box">
+          {{ selectedAppointment.notes }}
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <div class="status-warning" *ngIf="!isReportUnlocked(selectedAppointment)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        <span>Report unlocks at appointment time</span>
+      </div>
+      <button class="btn-primary" 
+              [disabled]="!isReportUnlocked(selectedAppointment)" 
+              [ngClass]="{'locked': !isReportUnlocked(selectedAppointment)}"
+              (click)="openReport()">
+        Show Report
+      </button>
+    </div>
+  </div>
+</div>
